@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MY CHAT</title>
+  <style>
+    body {
+      background: #121212;
+      color: #fff;
+      font-family: Arial;
+      display: flex;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    /* SETTINGS BUTTON */
+    .settingsBtn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* SETTINGS PANEL */
+    .settingsPanel {
+      position: absolute;
+      top: 50px;
+      left: 15px;
+      width: 260px;
+      background: #1e1e1e;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .settingsPanel input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 6px;
+      background: #2a2a2a;
+      border: none;
+      color: white;
+    }
+
+    .settingsPanel button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 6px;
+      background: #00ff99;
+      border: none;
+      cursor: pointer;
+    }
+
+    .contacts {
+      width: 25%;
+      background: #1e1e1e;
+      padding: 60px 15px 15px 15px;
+      overflow-y: auto;
+    }
+
+    .contacts div {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+
+    .contacts div:hover {
+      background: #333;
+    }
+
+    .chat {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .inputArea {
+      display: flex;
+    }
+
+    .inputArea input {
+      flex: 1;
+      padding: 8px;
+      background: #2a2a2a;
+      border: none;
+      color: white;
+    }
+
+    .inputArea button {
+      padding: 8px 15px;
+      background: #00ff99;
+      border: none;
+      cursor: pointer;
+    }
+
+    .myMsg {
+      text-align: right;
+      margin: 5px;
+      color: #00ff99;
+    }
+
+    .theirMsg {
+      text-align: left;
+      margin: 5px;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="settingsBtn" onclick="toggleSettings()">⚙</div>
+
+<div class="settingsPanel" id="settingsPanel">
+  <h4>Personal Settings</h4>
+  <p><b>Email:</b></p>
+  <input id="userEmail" disabled>
+  <p><b>Username:</b></p>
+  <input id="newUsername">
+  <p><b>Password:</b></p>
+  <input id="newPassword">
+  <button onclick="updateUser()">Update</button>
+  <p id="updateStatus"></p>
+</div>
+
+<div class="contacts" id="contacts"></div>
+
+<div class="chat">
+  <h3 id="chatTitle">Select a user</h3>
+  <div id="messages"></div>
+
+  <div class="inputArea">
+    <input id="msg" placeholder="Type message">
+    <button onclick="send()">Send</button>
+  </div>
+</div>
+
+<script>
+
+const myEmail = localStorage.getItem("email");
+let currentChatUser = null;
+
+if (!myEmail) {
+  window.location.href = "login.html";
+}
+
+/* SETTINGS PANEL */
+function toggleSettings() {
+  const panel = document.getElementById("settingsPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+
+/* LOAD USER INFO */
+fetch("/user-info/" + myEmail)
+.then(res => res.json())
+.then(data => {
+  document.getElementById("userEmail").value = myEmail;
+  document.getElementById("newUsername").value = data.username;
+  document.getElementById("newPassword").value = data.password;
+});
+
+/* UPDATE USER */
+function updateUser() {
+  fetch("/update-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: myEmail,
+      username: document.getElementById("newUsername").value,
+      password: document.getElementById("newPassword").value
+    })
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("updateStatus").innerText = data;
+  });
+}
+
+/* LOAD ALL USERS */
+function loadUsers() {
+  fetch("/all-users")
+    .then(res => res.json())
+    .then(users => {
+      const contactsDiv = document.getElementById("contacts");
+      contactsDiv.innerHTML = "";
+
+      users.forEach(user => {
+        if (user.email !== myEmail) {
+          const div = document.createElement("div");
+          div.innerText = user.username;
+          div.onclick = () => openChat(user.email, user.username);
+          contactsDiv.appendChild(div);
+        }
+      });
+    });
+}
+
+function openChat(email, username) {
+  currentChatUser = email;
+  document.getElementById("chatTitle").innerText = "Chat with " + username;
+  loadMessages();
+}
+
+function loadMessages() {
+  if (!currentChatUser) return;
+
+  fetch(`/messages/${myEmail}/${currentChatUser}`)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("messages");
+      container.innerHTML = "";
+
+      data.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = msg.sender === myEmail ? "myMsg" : "theirMsg";
+        div.innerHTML = msg.message;
+        container.appendChild(div);
+      });
+
+      container.scrollTop = container.scrollHeight;
+    });
+}
+
+function send() {
+  const message = document.getElementById("msg").value;
+  if (!message || !currentChatUser) return;
+
+  fetch("/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sender: myEmail,
+      receiver: currentChatUser,
+      message,
+      time: Date.now()
+    })
+  }).then(() => {
+    document.getElementById("msg").value = "";
+    loadMessages();
+  });
+}
+
+setInterval(loadMessages, 2000);
+loadUsers();
+
+</script>
+
+</body>
+</html>

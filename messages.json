@@ -1,0 +1,151 @@
+[
+  {
+    "email": "diyu301009@gmail.com",
+    "message": "hello",
+    "time": "04:54 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "message": "this is admin",
+    "time": "04:54 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "message": "bruh",
+    "time": "07:20 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "message": "hello",
+    "time": "07:49 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "message": "updated version",
+    "time": "07:49 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "diyu",
+    "message": "hello",
+    "time": "08:12 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "diyu",
+    "message": "Hello",
+    "time": "08:14 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "diyu",
+    "message": "hello",
+    "time": "08:28 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "ADMIN",
+    "message": "bruh",
+    "time": "08:35 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "diyu",
+    "message": "hello",
+    "time": "08:42 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "diyu",
+    "message": "this is admin",
+    "time": "08:42 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "DIYANSHU",
+    "message": "hello",
+    "time": "08:54 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "DIYANSH",
+    "message": "hello",
+    "time": "08:55 PM"
+  },
+  {
+    "email": "diyu301009@gmail.com",
+    "username": "ADMIN",
+    "message": "this is admin",
+    "time": "08:55 PM"
+  },
+  {
+    "email": "albertrohit57@gmail.com",
+    "username": "ROHIT",
+    "message": "hello admin",
+    "time": "09:03 PM"
+  },
+  {
+    "type": "global",
+    "email": "diyu301009@gmail.com",
+    "username": "DIYANSHU",
+    "message": "sup man",
+    "time": "10:18 PM"
+  },
+  {
+    "type": "global",
+    "email": "diyu301009@gmail.com",
+    "username": "DIYANSHU",
+    "message": "all good?",
+    "time": "10:18 PM"
+  },
+  {
+    "type": "global",
+    "email": "albertrohit57@gmail.com",
+    "username": "ROHIT.S",
+    "message": "yup bro.",
+    "time": "10:18 PM"
+  },
+  {
+    "type": "global",
+    "email": "albertrohit57@gmail.com",
+    "username": "ROHIT.S",
+    "message": "what about you?",
+    "time": "10:19 PM"
+  },
+  {
+    "type": "private",
+    "sender": "diyu301009@gmail.com",
+    "receiver": "albertrohit57@gmail.com",
+    "senderUsername": "DIYANSHU",
+    "receiverUsername": "ROHIT.S",
+    "message": "hello man",
+    "time": 1770987794398
+  },
+  {
+    "type": "private",
+    "sender": "diyu301009@gmail.com",
+    "receiver": "albertrohit57@gmail.com",
+    "senderUsername": "DIYANSHU",
+    "receiverUsername": "ROHIT.S",
+    "message": "sup",
+    "time": 1770987799191
+  },
+  {
+    "type": "private",
+    "sender": "albertrohit57@gmail.com",
+    "receiver": "diyu301009@gmail.com",
+    "senderUsername": "ROHIT.S",
+    "receiverUsername": "DIYANSHU",
+    "message": "all good for me.",
+    "time": 1770987858724
+  },
+  {
+    "type": "private",
+    "sender": "albertrohit57@gmail.com",
+    "receiver": "diyu301009@gmail.com",
+    "senderUsername": "ROHIT.S",
+    "receiverUsername": "DIYANSHU",
+    "message": "what about u?",
+    "time": 1770987869081
+  }
+]

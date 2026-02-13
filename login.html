@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Private Chat Login</h2>
+
+<input type="email" id="email" placeholder="Email"><br><br>
+<input type="password" id="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="msg" style="color:red;"></p>
+
+<p><a href="forgot.html">Forgot password?</a></p>
+
+<script>
+function login() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+    })
+    .then(res => res.text())
+    .then(data => {
+        if (data === "ACCESS_GRANTED") {
+            localStorage.setItem("email", email);
+            window.location.href = "private.html";
+        } else {
+            document.getElementById("msg").innerText = "Invalid email or password";
+        }
+    })
+    .catch(() => {
+        document.getElementById("msg").innerText = "Server error";
+    });
+}
+</script>
+
+</body>
+</html>

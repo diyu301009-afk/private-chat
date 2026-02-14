@@ -1,5 +1,9 @@
 {
-  "dependencies": {
+ "engines": {
+  "node": "18.x"
+}
+
+ "dependencies": {
     "bcrypt": "^6.0.0",
     "body": "^5.1.0",
     "express": "^5.2.1",

@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - My Chat</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+
 </head>
 <body>
 
 <h2>Private Chat Login</h2>
 
-<input type="email" id="email" placeholder="Email"><br><br>
-<input type="password" id="password" placeholder="Password"><br><br>
+<input type="email" id="email" placeholder="Email" required><br><br>
+<input type="password" id="password" placeholder="Password" required><br><br>
 
 <button onclick="login()">Login</button>
 
@@ -20,6 +27,11 @@
 function login() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        document.getElementById("msg").innerText = "Please enter email and password";
+        return;
+    }
 
     fetch("/login", {
         method: "POST",
@@ -37,6 +49,17 @@ function login() {
     })
     .catch(() => {
         document.getElementById("msg").innerText = "Server error";
+    });
+}
+</script>
+
+<!-- Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('Service Worker Registered'))
+            .catch(err => console.log('Service Worker Error:', err));
     });
 }
 </script>

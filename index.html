@@ -8,5 +8,38 @@
     <p>This site is public. Login is restricted.</p>
 
     <a href="/login.html">Login</a>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBmbAg30WzmoSpSn8WW70TkWHJkIKqdayjo",
+    authDomain: "my-chat-33ec0.firebaseapp.com",
+    projectId: "my-chat-33ec0",
+    storageBucket: "my-chat-33ec0.firebasestorage.app",
+    messagingSenderId: "811904126379",
+    appId: "1:811904126379:web:66f0f1d33fe210983296ee"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      getToken(messaging, {
+        vapidKey: "BOH8-Jg9CFltsMLqv_TF98G2AR0fcFg9injk2F5obtwobRE0zQFRGTp7cK2ONoZcre8Xr9ilgg3YUgoxXOCieL8"
+      }).then((currentToken) => {
+        if (currentToken) {
+          console.log("Token:", currentToken);
+        }
+      });
+    }
+  });
+
+  onMessage(messaging, (payload) => {
+    console.log("Message received:", payload);
+  });
+</script>
+
 </body>
 </html>

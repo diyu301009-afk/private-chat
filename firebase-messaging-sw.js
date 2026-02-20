@@ -12,9 +12,11 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+// 🔔 Background notifications (when app is closed/minimized)
 messaging.onBackgroundMessage(function(payload) {
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification.body,
-    icon: "/192.png"
+    icon: "/192.png",
+    badge: "/192.png"
   });
 });
